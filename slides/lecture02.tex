@@ -478,22 +478,106 @@ print(resp.choices[0].message.content)
   \end{center}
 \end{frame}
 
-% ---------------------------------------------------------------- cautions
-\begin{frame}{Two cautions before you run it}
-  \begin{featbox}{accentgold}{\faGlobe\ Auth can stall on campus Wi-Fi}
-    \small The first login is a Globus \emph{browser} flow. If it hangs, try a
-    personal hotspot, or use the instructor's pre-run notebook output as a fallback ---
-    the \emph{ideas} don't depend on your token working in the first five minutes.
-  \end{featbox}
+% ================================================================ RAG mini-section (capstone / preview of Week 4)
+\begin{frame}{From teaser to method: this is RAG}
+  \begin{center}\small
+  You just grounded \emph{one} verse by hand. \textbf{RAG} automates that: for any
+  question, first \emph{find} the right passages, then answer \emph{only} from them.
+  \end{center}
+  \vspace{6pt}
+  \begin{center}
+  \begin{tikzpicture}[font=\scriptsize,
+      s/.style={rectangle, rounded corners=3pt, draw, thick, fill=lightgray,
+                drop shadow, align=center, text width=2.3cm, minimum height=1.15cm}]
+    \node[s, draw=labnavy]    (q)  {\faQuestionCircle\\ \textbf{Question}\\ \scriptsize ``body of death?''};
+    \node[s, draw=cRAG, right=0.95cm of q] (r) {\faSearch\\ \textbf{Retrieve}\\ \scriptsize nearest verses};
+    \node[s, draw=accentblue, right=0.95cm of r] (g) {\faLayerGroup\\ \textbf{Ground}\\ \scriptsize verses $\to$ prompt};
+    \node[s, draw=cAgent, right=0.95cm of g] (a) {\faComments\\ \textbf{Generate}\\ \scriptsize cited answer};
+    \draw[-{Latex[length=5pt]}, thick, midgray] (q)--(r);
+    \draw[-{Latex[length=5pt]}, thick, midgray] (r)--(g);
+    \draw[-{Latex[length=5pt]}, thick, midgray] (g)--(a);
+    \node[below=0.45cm of r, text width=3.0cm, align=center, font=\scriptsize, text=midgray]
+      {from \emph{your} corpus\\(all 31{,}100 KJV verses)};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{2pt}
+  \begin{columns}[t, totalwidth=\textwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{cRAG}{\faKey\ The one rule}
+        \scriptsize The model may use \textbf{only} the retrieved text. If the answer
+        isn't there, it must \textbf{say so} --- not invent.
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.04\textwidth}\end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{accentblue}{\faSync\ Same client}
+        \scriptsize Retrieve \emph{and} generate both call the \textbf{same} ALCF
+        endpoint from Step 2 --- no new tools.
+      \end{featbox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------- RAG: with vs without on the whole Bible
+\begin{frame}{RAG on the whole Bible: with vs.\ without}
+  \begin{columns}[t, totalwidth=\textwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{accentgold}{\faGhost\ WITHOUT RAG --- from memory}
+        \scriptsize A small model \textbf{paraphrases} Scripture and \textbf{invents}
+        chapter:verse. Fluent, familiar-sounding --- and often subtly \textbf{wrong}.
+        \\[4pt]{\tiny\color{midgray}\emph{``Hezekiah 3:16''} $\to$ a confident, fabricated verse.}
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.04\textwidth}\end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{cRAG}{\faCheckDouble\ WITH RAG --- from the text}
+        \scriptsize Retrieves from all \textbf{31,100 verses}, quotes \textbf{exactly},
+        and \textbf{cites}. Ask for a book that doesn't exist and it \textbf{declines}.
+        \\[4pt]{\tiny\color{midgray}\emph{``Hezekiah 3:16''} $\to$ ``Not found in the provided verses.''}
+      \end{featbox}
+    \end{column}
+  \end{columns}
   \vspace{8pt}
-  \begin{featbox}{accentblue}{\faCompass\ This is not an HPC lesson}
-    \small We are using a supercomputer, but today it's just ``a model behind a URL.''
-    Spend your attention on \textbf{what the model does}, not on clusters or queues.
-    We never leave the notebook.
-  \end{featbox}
+  \begin{calloutbox}[cRAG]
+    \small\faBalanceScale\ \textbf{The theological stakes:} a paraphrase can drift
+    doctrine; an exact citation can be \textbf{checked}. RAG turns the model from a
+    \emph{source} into a \emph{finder} --- the scholar stays in charge of the text.
+  \end{calloutbox}
+  \vspace{2pt}
+  \begin{center}\footnotesize\color{midgray}%
+    Run it today: \texttt{bible\_rag/ask\_bible.py} --- same question, both ways.\end{center}
+\end{frame}
+
+% ---------------------------------------------------------------- RAG: how retrieval finds it
+\begin{frame}{How it finds the verse: words now, meaning next}
+  \begin{columns}[t, totalwidth=\textwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{accentblue}{\faSearch\ Keyword match (today)}
+        \scriptsize \textbf{BM25}: rank verses by shared words. Pure Python, instant
+        over 31k verses, no setup. Nails phrases (\emph{``still small voice''}) and
+        citations.
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.04\textwidth}\end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{cRAG}{\faVectorSquare\ Meaning match (next)}
+        \scriptsize \textbf{Embeddings}: rank by \emph{nearest vectors} --- Slide 6's
+        geometry. Catches paraphrase (\emph{``the greatest commandment''}) that shares
+        no keywords.
+      \end{featbox}
+    \end{column}
+  \end{columns}
   \vspace{8pt}
-  \begin{center}\small\color{labnavy}\bfseries
-    Goal of the lab: you have \emph{talked to a raw model} and \emph{caught it lying}.\end{center}
+  \begin{center}
+  \begin{minipage}{0.9\textwidth}\small
+    Same \textbf{retrieve $\to$ ground $\to$ generate} loop --- only the \emph{ranking}
+    step changes. The lab ships with keyword search working out of the box;
+    \texttt{build\_index.py} adds the embedding upgrade.
+  \end{minipage}
+  \end{center}
+  \vspace{4pt}
+  \begin{center}\small\color{labnavy}\bfseries%
+    Retrieval is the bridge from Slide 6's ``meaning as geometry'' to a cited answer.\end{center}
 \end{frame}
 
 % ================================================================ touchpoint / wrap
