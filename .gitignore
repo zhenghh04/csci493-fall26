@@ -33,5 +33,6 @@ theologian_agents/
 # --- Stray uploads ---
 uploads/
 
-# --- Bible RAG: generated embedding cache (~48 MB, model-specific, rebuild via build_index.py) ---
+# --- Bible RAG: generated embedding caches (model-specific, rebuildable) ---
 tutorials/week02_alcf_inference/bible_rag/bible_index.npz
+tutorials/week02_alcf_inference/bible_rag/bible_index_local.npz
