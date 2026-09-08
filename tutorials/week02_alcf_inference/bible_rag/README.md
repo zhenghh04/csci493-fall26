@@ -27,8 +27,8 @@ and between a citation you can trust and one you have to go check.
 # 0. Download the corpus ONCE (no ALCF token needed; ~6.7 MB, public domain KJV)
 python get_bible.py
 
-# 1. The model client
-pip install openai numpy
+# 1. The model client (from the tutorial dir one level up)
+pip install -r ../requirements.txt               # openai + numpy + requests
 python inference_auth_token.py authenticate      # browser login, ~48h token
 ```
 
@@ -86,7 +86,7 @@ fine). Only retrieval is local; the **answer** step still uses the small ALCF ch
 model, so the with/without-RAG lesson is unchanged.
 
 ```bash
-pip install sentence-transformers            # pulls torch; run once
+pip install -r requirements-local.txt        # sentence-transformers + torch; run once
 python build_index_local.py                  # writes bible_index_local.npz (~90s on CPU)
 python ask_bible_local.py --embed "the greatest commandment"
 # retrieval is local, so this needs NO ALCF token:

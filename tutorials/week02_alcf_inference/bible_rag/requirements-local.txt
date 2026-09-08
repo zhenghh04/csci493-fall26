@@ -1,0 +1,18 @@
+# bible_rag — OPTIONAL local-embedding upgrade
+# Install with (from tutorials/week02_alcf_inference/bible_rag/):
+#   pip install -r requirements-local.txt
+#
+# Only needed for the semantic retriever that runs on YOUR machine:
+#   python build_index_local.py            # embed all 31,100 verses once
+#   python ask_bible_local.py --embed ...  # retrieve by meaning, not keywords
+#
+# The default BM25 path needs none of this — it's covered by the base
+# requirements.txt one level up. This file installs that base too.
+#
+# sentence-transformers pulls in torch (~1 GB). On a plain CPU machine
+# `pip install` fetches the correct CPU wheel automatically; no GPU needed.
+
+-r ../requirements.txt
+
+# local embedding model (default: all-MiniLM-L6-v2)
+sentence-transformers>=2.2

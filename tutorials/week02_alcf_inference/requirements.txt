@@ -1,0 +1,21 @@
+# Week 2 lab — ALCF inference endpoint tutorial
+# Install with:   pip install -r requirements.txt
+#
+# Covers everything you run on class day:
+#   01_hello_alcf.py, 02_simple_rag.py, alcf_inference_demo.ipynb,
+#   and the bible_rag/ capstone with its default BM25 retriever
+#   (and the ALCF-served embedding path, if available).
+#
+# NOTE: the auth helper `inference_auth_token.py` is NOT a pip package.
+# Download it once with wget (see any script header or the README):
+#   wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/main/inference_auth_token.py
+
+# OpenAI-compatible client for the ALCF endpoint
+openai>=1.0
+# vector math for the bible_rag retrievers
+numpy>=1.21
+# list served models (notebook helper)
+requests>=2.25
+
+# Optional — local HuggingFace embeddings for bible_rag (adds ~1 GB torch):
+#   pip install -r bible_rag/requirements-local.txt

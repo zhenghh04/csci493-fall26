@@ -16,10 +16,13 @@ package, **(3)** ~15 lines of code. That's it. We never leave the notebook.
 
 - An **ALCF account** with the **DLIO** project (you applied in Week 1 at
   <https://accounts.alcf.anl.gov>). If you don't have it yet, pair up with someone who does.
-- Python 3.9+ and the OpenAI client:
+- Python 3.9+ and the tutorial dependencies:
   ```bash
-  pip install openai
+  pip install -r requirements.txt
   ```
+  (installs `openai`, `numpy`, `requests` — everything for class day. The
+  optional local-embedding upgrade for `bible_rag/` is a separate install:
+  `pip install -r bible_rag/requirements-local.txt`.)
 
 ## 1. Authenticate (once; token lasts ~48 hours)
 
