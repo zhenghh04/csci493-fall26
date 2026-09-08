@@ -106,6 +106,27 @@ served, so the lesson runs either way.
 
 ---
 
+## Going further — chat with the *whole* Bible (`bible_rag/`)
+
+Experiment #4 does RAG over six verses. In [`bible_rag/`](bible_rag/) the corpus is
+the **entire King James Bible — 31,100 verses**, and you ask a **small** model the
+same question **without** and **with** RAG, side by side:
+
+```bash
+cd bible_rag
+python get_bible.py            # once: downloads the KJV (no token needed)
+python ask_bible.py            # 5 questions, each answered without-RAG then with-RAG
+python ask_bible.py "Quote John 3:16 exactly."
+```
+
+Watch the small model **paraphrase and misquote** from memory, then **quote exactly
+and cite** once it can retrieve — and **refuse** ("Not found in the provided verses.")
+when you ask for a verse that doesn't exist. That contrast is the theological-integrity
+case for RAG. See [`bible_rag/README.md`](bible_rag/README.md) for the optional
+embedding (semantic) retriever.
+
+---
+
 ## Troubleshooting
 
 | Symptom | Fix |
