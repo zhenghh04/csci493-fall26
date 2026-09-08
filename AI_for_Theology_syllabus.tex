@@ -1,0 +1,349 @@
+\documentclass[11pt]{article}
+
+% ---------- packages ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------- colors ----------
+\definecolor{primary}{HTML}{1F3A5F}   % deep blue
+\definecolor{accent}{HTML}{8C5A2B}    % warm brown
+\definecolor{light}{HTML}{EEF2F7}     % pale blue-gray
+\definecolor{rule}{HTML}{C9D3DE}
+
+\hypersetup{colorlinks=true, linkcolor=primary, urlcolor=accent}
+
+% ---------- section styling ----------
+\titleformat{\section}
+  {\color{primary}\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}
+  {\color{accent}\large\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+
+% pillar tag command
+\newcommand{\pillar}[1]{{\small\color{accent}\textbf{[#1]}}}
+\newcommand{\newtag}{{\small\color{accent}$\bigstar$\,new}}
+
+% phase heading
+\newcommand{\phase}[1]{%
+  \vspace{0.8em}
+  \noindent\colorbox{primary}{\parbox{\dimexpr\textwidth-2\fboxsep}{%
+    \color{white}\bfseries\large\strut #1}}\par\vspace{0.5em}}
+
+% week block
+\newenvironment{week}[2]{%
+  \vspace{0.4em}
+  \noindent{\color{primary}\bfseries #1}\; #2\par\nobreak
+  \begin{itemize}[leftmargin=1.4em,itemsep=1pt,topsep=2pt]}%
+  {\end{itemize}}
+
+% ---------- header/footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{rule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\color{primary}AI for Theological Inquiry}
+\fancyhead[R]{\small\color{primary}Mentored Research Seminar}
+\fancyfoot[C]{\small\color{primary}\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+
+\renewcommand{\arraystretch}{1.25}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% ---------- title ----------
+\begin{document}
+
+\begin{center}
+  {\color{primary}\Huge\bfseries AI for Theological Inquiry}\\[0.3em]
+  {\color{accent}\Large Mentored Research Seminar}\\[0.9em]
+  \begin{tcolorbox}[colback=light,colframe=rule,boxrule=0.5pt,arc=2pt,
+    left=8pt,right=8pt,top=6pt,bottom=6pt,width=0.95\textwidth]
+    \small
+    \textbf{Format:} 14 weeks $\cdot$ one 100-minute session/week \quad
+    \textbf{Type:} Mentored research seminar (students produce an original agentic-AI research project)\\[0.3em]
+    \textbf{Organizing idea:} AI as a \emph{scholarly instrument} \textbf{and} as a \emph{theological subject} ---
+    both ``agentic AI \textbf{for} studying theology'' and ``what theology says \textbf{about} agentic AI.''\\[0.3em]
+    \textbf{Three technical pillars:} \textbf{Agentic AI $\cdot$ Retrieval-Augmented Generation (RAG) $\cdot$ Evaluation.}
+  \end{tcolorbox}
+\end{center}
+
+% ---------- 1. description ----------
+\section{Course description}
+This seminar teaches students to use \textbf{agentic AI} --- systems that plan, use tools, retrieve
+sources, and act over multiple steps --- as instruments of theological and religious-studies
+research, while critically examining the theological and ethical questions autonomous AI raises.
+Students learn to \emph{design a research process}: an agent that retrieves primary sources
+(\textbf{RAG}), cross-references them, drafts with citations, critiques its own output, and --- crucially ---
+is \textbf{evaluated} so its claims are checked rather than trusted. Each student (or pair) develops,
+executes, evaluates, and defends an original project.
+
+The three pillars build on each other: \textbf{agentic AI} is the system, \textbf{RAG} is how it stays
+grounded in real texts, and \textbf{evaluation} is how you know whether any of it is trustworthy ---
+especially vital where a fabricated scripture reference is a scholarly (and pastoral) failure.
+
+% ---------- 2. objectives ----------
+\section{Learning objectives}
+By the end of the course a student can:
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item \pillar{Agentic AI} Explain what turns an LLM into an agent (tool use, memory, plan$\rightarrow$act$\rightarrow$observe,
+    autonomy) and build a multi-step, self-critiquing research agent.
+  \item \pillar{RAG} Build a retrieval-augmented pipeline over a theological corpus so the agent cites
+    \emph{real} sources, and diagnose where grounding fails.
+  \item \pillar{Evaluation} Design and run an evaluation of a RAG/agent system --- retrieval quality,
+    groundedness/faithfulness, answer relevance, task success, and cost --- using golden datasets,
+    LLM-as-judge, and human review, while knowing each method's limits.
+  \item Design a researchable theological question with a matching agentic method \textbf{and eval plan}.
+  \item Analyze the theological questions autonomy raises --- personhood, \emph{imago Dei}, agency,
+    responsibility, spiritual authority --- and report AI-assisted scholarship \textbf{honestly}.
+\end{enumerate}
+
+% ---------- 3. track ----------
+\section{Track decision --- Hybrid (low-code default, optional light-code)}
+Low-code by default: students build with provided notebook templates and a config-driven builder,
+keeping the focus on theology and research design. A parallel \textbf{light-code (Python) path} offers
+the same milestones for technically inclined students. Every lab ships with a working scaffold ---
+no one writes agents or eval harnesses from scratch.
+
+% ---------- 4. toolkit ----------
+\section{Standardized toolkit}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}l Y Y@{}}
+\toprule
+\normalfont\textbf{Layer} & \textbf{Default (low-code)} & \textbf{Light-code option} \\
+\midrule
+Model access & Hosted chat model with tool-use (instructor-provided) & Same, via API \\
+Agent scaffold & Notebook templates (``research agent,'' ``researcher + fact-checker'') & Minimal Python agent loop \\
+Retrieval (RAG) & Prebuilt vector-search over the class corpus & Student-assembled components \\
+\textbf{Evaluation} & Provided eval notebook (golden Q\&A set, groundedness + citation checks, LLM-as-judge template) & Same, extensible (e.g. a RAG-eval library) \\
+Corpus/sources & Curated digital primary sources (see Week 3) & Same \\
+Documentation & Shared trace log + prompt/tool/eval journal & Same \\
+\bottomrule
+\end{tabularx}
+
+\begin{tcolorbox}[colback=light,colframe=accent,boxrule=0.5pt,arc=2pt,left=8pt,right=8pt,top=5pt,bottom=5pt]
+\small\textbf{Guest session recommended} around Week 5--6: ``How real agentic systems are built
+\emph{and evaluated}'' from a practitioner.
+\end{tcolorbox}
+
+% ---------- 5. session shape ----------
+\section{Weekly session shape (100 min)}
+$\sim$40 min concept \& discussion $\cdot$ $\sim$40 min hands-on lab $\cdot$ $\sim$20 min project touchpoint
+(peer review or mentor check-in). Continuous mentoring, not just in Phase 4.
+
+% ==================== PHASE 1 ====================
+\phase{Phase 1 --- Foundations (Weeks 1--3)}
+
+\begin{week}{Week 1}{Framing: ``AI for Theology''}
+  \item \textbf{Objective:} Locate the field; articulate a personal research interest.
+  \item \textbf{Topics:} Instrument vs. subject; digital humanities, computational text study, AI ethics;
+    survey of the AI/religion intersection; preview the three pillars.
+  \item \textbf{Hands-on:} Map ``questions I care about''; a deliberately naive chatbot query on a doctrine
+    question --- note what feels off (previews \emph{why} we need RAG + evaluation).
+  \item \textbf{Deliverable:} One-paragraph interest statement.
+  \item \textbf{Readings:} A survey on AI \& religion (e.g. Beth Singler); course intro notes.
+\end{week}
+
+\begin{week}{Week 2}{From LLMs to \emph{agents} \pillar{Agentic AI}}
+  \item \textbf{Objective:} Build the core mental model of an agent.
+  \item \textbf{Topics:} Next-token prediction, embeddings, hallucination; the step to agency --- tool use,
+    memory, the plan$\rightarrow$act$\rightarrow$observe loop, autonomy.
+  \item \textbf{Hands-on:} Watch an agent decompose a question and call a tool; diagnose where it errs.
+  \item \textbf{Readings:} Wolfram, \emph{What Is ChatGPT Doing \dots?} (selections); Anthropic, ``Building Effective
+    Agents'' (2024); Weng, ``LLM-Powered Autonomous Agents'' (2023). \emph{Optional:} Yao et al., ``ReAct.''
+\end{week}
+
+\begin{week}{Week 3}{Sources and the theological corpus}
+  \item \textbf{Objective:} Understand the data landscape and its theological freight.
+  \item \textbf{Topics:} Digital primary sources (original-language scripture, patristics, Qur'anic corpora,
+    Talmud, translations, hymnody, sermons); copyright, canon, translation politics; ``the data is
+    theologically loaded'' --- and why that shapes both retrieval and evaluation.
+  \item \textbf{Hands-on:} Locate and load the corpus each student will use all term.
+  \item \textbf{Readings:} Claire Clivaz on digital humanities \& biblical studies (selection).
+\end{week}
+
+% ==================== PHASE 2 ====================
+\phase{Phase 2 --- Technical Core: Agentic AI $\cdot$ RAG $\cdot$ Evaluation (Weeks 4--7)}
+
+\begin{week}{Week 4}{Retrieval-Augmented Generation \pillar{RAG}}
+  \item \textbf{Objective:} Make an agent cite \emph{real} texts, not invented ones.
+  \item \textbf{Topics:} Embeddings and semantic search; chunking; the retrieve$\rightarrow$augment$\rightarrow$generate loop; RAG as
+    the agent's key tool; failure modes (bad chunking, wrong retrieval, ignored context).
+  \item \textbf{Hands-on:} Build an ``ask-your-corpus'' RAG agent over a Week-3 text.
+  \item \textbf{Readings:} Lewis et al., ``Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks''
+    (2020, the idea, not the math).
+\end{week}
+
+\begin{week}{Week 5}{Building a research agent \pillar{Agentic AI}}
+  \item \textbf{Objective:} Turn a RAG tool into a multi-step, self-critiquing research agent.
+  \item \textbf{Topics:} Agent design patterns --- planning, reflection/self-critique; a two-agent setup
+    (``researcher'' + ``critic/fact-checker'') to catch fabricated references; text-analysis techniques
+    (semantic search, concept-tracing of \emph{hesed}/\emph{agape}/\emph{grace}) reframed as \textbf{tools the agent wields}.
+  \item \textbf{Hands-on:} Extend Week-4's RAG into a planning + reflection agent; add a fact-checker.
+  \item \textbf{Readings:} Shinn et al., ``Reflexion'' (2023, concept); Wang et al., ``A Survey on LLM-based
+    Autonomous Agents'' (2023, selections). \emph{Guest slot.}
+\end{week}
+
+\begin{week}{Week 6}{Evaluation: how do you know it works? \pillar{Evaluation} \newtag}
+  \item \textbf{Objective:} Measure whether a RAG/agent system is trustworthy.
+  \item \textbf{Topics:}
+    \begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+      \item \textbf{RAG evaluation} --- retrieval precision/recall, \textbf{groundedness/faithfulness} (is the answer
+        supported by retrieved text?), answer relevance, and \textbf{citation verification} (does the cited
+        verse/passage actually exist and say that?).
+      \item \textbf{Agent evaluation} --- task success, trajectory / tool-use correctness, cost \& latency
+        efficiency, robustness.
+      \item \textbf{Methods} --- golden/reference datasets, \textbf{LLM-as-judge} and its pitfalls (bias, inconsistency),
+        human evaluation, and when to use which.
+      \item \textbf{Theology-specific angles} --- doctrinal fidelity, translation sensitivity, and \textbf{bias across
+        traditions} (whose theology is the ``correct answer''?).
+    \end{itemize}
+  \item \textbf{Hands-on:} Build a small golden Q\&A set for your corpus; run groundedness + citation-existence
+    checks and an LLM-as-judge pass on Week-5's agent; report a scorecard.
+  \item \textbf{Readings:} Es et al., ``RAGAS'' (2023); Liu et al., ``G-Eval'' (2023); Zheng et al., ``Judging
+    LLM-as-a-Judge / MT-Bench'' (2023, selections).
+\end{week}
+
+\begin{week}{Week 7}{Research design \& proposal \quad (midpoint gate)}
+  \item \textbf{Objective:} Convert curiosity into a researchable question + agent design + \textbf{eval plan}.
+  \item \textbf{Topics:} Scope, method, evidence, what counts as a finding; which agent steps and tools; how
+    you will \textbf{evaluate} and verify claims (metrics, golden set, human check); reproducibility and
+    documenting agentic-AI use (prompts, tools, traces, eval).
+  \item \textbf{Deliverable:} 1--2 page proposal + 5-min pitch. \textbf{Must include an evaluation plan.}
+  \item \textbf{Readings:} Research-methods primer (notes); one exemplar agentic-DH study.
+\end{week}
+
+% ==================== PHASE 3 ====================
+\phase{Phase 3 --- Domain Deep-Dives + Project Launch (Weeks 8--10)}
+
+\begin{week}{Week 8}{AI and hermeneutics}
+  \item \textbf{Objective:} Interrogate whether an agent can ``interpret.''
+  \item \textbf{Topics:} Multi-step reasoning vs. genuine understanding; authorial intent, tradition, the
+    interpretive community; higher stakes when an agent \emph{acts} on interpretation.
+  \item \textbf{Hands-on:} Projects formally begin; first evaluated agent runs on the student's question.
+  \item \textbf{Readings:} Gadamer, \emph{Truth and Method} (selections); a piece on machine ``understanding.''
+\end{week}
+
+\begin{week}{Week 9}{Theology \emph{of} agentic AI}
+  \item \textbf{Objective:} Examine personhood and autonomy theologically.
+  \item \textbf{Topics:} \emph{Imago Dei}, personhood, consciousness; \textbf{agency and autonomy} --- moral status,
+    responsibility, delegation when a system \emph{acts}; AI and idolatry; eschatology.
+  \item \textbf{Hands-on:} Mentored project check-in.
+  \item \textbf{Readings:} Herzfeld, \emph{The Artifice of Intelligence} (2023) selections; Dorobantu on AI \&
+    personhood; Vatican, \emph{Rome Call for AI Ethics} (2020) / \emph{Antiqua et Nova} (2025) selections.
+\end{week}
+
+\begin{week}{Week 10}{Ethics, bias, and the limits of autonomy}
+  \item \textbf{Objective:} Adopt a critical, human-in-the-loop stance (connects back to evaluation).
+  \item \textbf{Topics:} Training-data bias (whose theology dominates?); fabricated citations; agentic-specific
+    risks --- compounding errors across steps, over-trust in an autonomous ``researcher,''
+    pastoral/spiritual-authority harms; designing human oversight; \textbf{bias-aware evaluation}.
+  \item \textbf{Hands-on:} Each project adds an explicit verification/oversight step to its eval plan.
+  \item \textbf{Readings:} Bender et al., ``On the Dangers of Stochastic Parrots'' (2021); Crawford, \emph{Atlas of
+    AI} (2021, selections).
+\end{week}
+
+% ==================== PHASE 4 ====================
+\phase{Phase 4 --- Mentored Research Execution (Weeks 11--13)}
+
+\begin{week}{Week 11}{Build sprint (studio)}
+  \item \textbf{Objective:} Execute the agentic pipeline; troubleshoot traces.
+  \item \textbf{Format:} Studio --- students build, mentors circulate; structured trace debugging.
+\end{week}
+
+\begin{week}{Week 12}{Evaluate \& critique \pillar{Evaluation, applied}}
+  \item \textbf{Objective:} Run a real evaluation of your \emph{own} project and defend it.
+  \item \textbf{Format:} Students apply Week-6 methods to their systems (scorecard: groundedness, citation
+    checks, task success, bias spot-checks); peer-review swap + mentor stress-test of claims and AI-reliance.
+  \item \textbf{Deliverable:} Preliminary results + \textbf{evaluation report} (early-warning checkpoint).
+\end{week}
+
+\begin{week}{Week 13}{Write-up \& communication}
+  \item \textbf{Objective:} Turn results into an honest argument.
+  \item \textbf{Topics:} Presenting agentic work with integrity --- goals, tools, traces, \textbf{eval results},
+    failures, human oversight. Draft final paper + slides.
+\end{week}
+
+\phase{Week 14 --- Symposium}
+Final presentations (cohort + invited faculty), Q\&A, and a closing reflection: \textbf{what did the
+agent reveal, what did it distort, how well did it hold up under evaluation, and what did this
+teach us theologically?}
+\begin{itemize}[leftmargin=1.4em,topsep=2pt]
+  \item \textbf{Deliverable:} Final paper + presentation.
+\end{itemize}
+
+% ==================== ASSESSMENT ====================
+\section{Assessment}
+\begin{tabularx}{\textwidth}{@{}Y r l@{}}
+\toprule
+\textbf{Component} & \textbf{Weight} & \textbf{Due} \\
+\midrule
+Participation \& project touchpoints & 15\% & Weekly \\
+Interest statement & 5\% & Week 1 \\
+Research proposal + pitch (incl. eval plan) & 20\% & Week 7 (gate) \\
+Preliminary results + evaluation report & 15\% & Week 12 \\
+Final paper & 30\% & Week 14 \\
+Final presentation & 15\% & Week 14 \\
+\bottomrule
+\end{tabularx}
+
+% ==================== RUBRICS ====================
+\section{Rubrics}
+
+\subsection*{Research proposal (Week 7)}
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+  \item \textbf{Question (20\%)} --- theologically substantive, researchable, well-scoped.
+  \item \textbf{Agent design (20\%)} --- steps, tools, and RAG grounding fit the question.
+  \item \textbf{Evaluation plan (25\%)} --- credible metrics + golden set / human check; awareness of failure
+    modes and bias.
+  \item \textbf{Feasibility \& sources (20\%)} --- corpus available; scope achievable.
+  \item \textbf{Communication (15\%)} --- clear pitch and writing.
+\end{itemize}
+
+\subsection*{Final paper (Week 14)}
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+  \item \textbf{Scholarly contribution (25\%)} --- a real finding or a well-argued negative result.
+  \item \textbf{Method \& agent design (20\%)} --- sound, well-documented, reproducible RAG/agent pipeline.
+  \item \textbf{Evaluation \& critical stance (25\%)} --- claims measured \emph{and} checked; groundedness/citations
+    verified; bias and limits addressed; human-in-the-loop evident.
+  \item \textbf{Theological/ethical reflection (15\%)} --- engages the ``AI as subject'' questions (Weeks 8--10).
+  \item \textbf{Communication (15\%)} --- structure, clarity, honest reporting of AI use.
+\end{itemize}
+
+\begin{tcolorbox}[colback=light,colframe=accent,boxrule=0.5pt,arc=2pt,left=8pt,right=8pt,top=5pt,bottom=5pt]
+\small\textbf{Agentic-AI use disclosure (required in every deliverable).}
+An appendix in every submission: models/tools used, key prompts, representative \textbf{traces},
+\textbf{evaluation results/scorecard}, where the agent failed, and how the student verified results.
+Undisclosed or unevaluated AI reliance is penalized.
+\end{tcolorbox}
+
+% ==================== NOTES ====================
+\section{Notes for the instructor}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Readings are starting points from the instructor's knowledge --- verify current editions,
+    availability, and access before distributing.} Swap in tradition-appropriate sources
+    (Christian / Jewish / Islamic / comparative) to match the cohort.
+  \item \textbf{The three pillars are cumulative} --- RAG (W4) grounds the agent (W5), and evaluation (W6)
+    judges both; keep labs building on the \emph{same} corpus and agent so students see the through-line.
+  \item \textbf{Evaluation is the highest-leverage theology-specific skill here} --- a fabricated citation is a
+    scholarly failure, so budget real time for the golden-set + citation-verification lab.
+  \item \textbf{Decide access early:} hosted model + tool-use quota; whether the light-code path needs an
+    optional extra lab.
+  \item \textbf{Corpus curation is the top prep task} --- a clean, rights-clear, well-scoped corpus makes every
+    RAG and eval lab work.
+\end{itemize}
+
+\end{document}

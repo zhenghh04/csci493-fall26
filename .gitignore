@@ -1,0 +1,34 @@
+# --- LaTeX build artifacts (keep .tex and .pdf, drop the rest) ---
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+texput.log
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+
+# --- Copyrighted reading PDFs: do NOT redistribute; cite instead ---
+readings/*.pdf
+
+# --- Separate research project (has its own paper); publish separately ---
+theologian_agents/
+
+# --- Stray uploads ---
+uploads/
