@@ -11,11 +11,35 @@
       },
       "models": {
         "meta-llama/Meta-Llama-3.1-8B-Instruct": {
-          "name": "Llama 3.1 8B Instruct (ALCF)",
+          "name": "Llama 3.1 8B Instruct (small, fast)",
           "limit": { "context": 131072, "output": 8192 }
         },
         "meta-llama/Meta-Llama-3.1-70B-Instruct": {
-          "name": "Llama 3.1 70B Instruct (ALCF)",
+          "name": "Llama 3.1 70B Instruct",
+          "limit": { "context": 131072, "output": 8192 }
+        },
+        "meta-llama/Llama-3.3-70B-Instruct": {
+          "name": "Llama 3.3 70B Instruct (good at code)",
+          "limit": { "context": 131072, "output": 8192 }
+        },
+        "meta-llama/Meta-Llama-3.1-405B-Instruct": {
+          "name": "Llama 3.1 405B Instruct (largest)",
+          "limit": { "context": 131072, "output": 8192 }
+        },
+        "mistralai/Mixtral-8x22B-Instruct-v0.1": {
+          "name": "Mixtral 8x22B Instruct",
+          "limit": { "context": 65536, "output": 8192 }
+        },
+        "mistralai/Mistral-Large-Instruct-2407": {
+          "name": "Mistral Large Instruct",
+          "limit": { "context": 131072, "output": 8192 }
+        },
+        "openai/gpt-oss-20b": {
+          "name": "gpt-oss 20B (open weights)",
+          "limit": { "context": 131072, "output": 8192 }
+        },
+        "openai/gpt-oss-120b": {
+          "name": "gpt-oss 120B (open weights)",
           "limit": { "context": 131072, "output": 8192 }
         }
       }

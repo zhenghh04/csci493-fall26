@@ -48,12 +48,12 @@ export ALCF_TOKEN="$(python inference_auth_token.py get_access_token)"
 
 Copy [`opencode.json`](opencode.json) into your **project folder** (opencode reads
 it from the directory you launch in; a global copy lives at
-`~/.config/opencode/opencode.json`). The important lines:
+`~/.config/opencode/opencode.json`). The shape:
 
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "alcf/meta-llama/Meta-Llama-3.1-8B-Instruct",
+  "model": "alcf/meta-llama/Meta-Llama-3.1-8B-Instruct",   // the default at startup
   "provider": {
     "alcf": {
       "npm": "@ai-sdk/openai-compatible",
@@ -62,8 +62,12 @@ it from the directory you launch in; a global copy lives at
         "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
         "apiKey": "{env:ALCF_TOKEN}"
       },
-      "models": {
-        "meta-llama/Meta-Llama-3.1-8B-Instruct": { "name": "Llama 3.1 8B (ALCF)" }
+      "models": {                                            // every entry here shows up in /models
+        "meta-llama/Meta-Llama-3.1-8B-Instruct":  { "name": "Llama 3.1 8B (small, fast)" },
+        "meta-llama/Meta-Llama-3.1-70B-Instruct": { "name": "Llama 3.1 70B" },
+        "meta-llama/Llama-3.3-70B-Instruct":      { "name": "Llama 3.3 70B (good at code)" },
+        "openai/gpt-oss-120b":                    { "name": "gpt-oss 120B" }
+        // ...the shipped opencode.json lists 8 models; add or remove freely
       }
     }
   }
@@ -74,25 +78,37 @@ Read the four fields out loud so they stop being magic:
 - `baseURL` — **identical** to your Week 2 client. Same engine, new frontend.
 - `apiKey: "{env:ALCF_TOKEN}"` — pulls the token from your shell; no secret in the file.
 - `npm: "@ai-sdk/openai-compatible"` — ALCF serves `/v1/chat/completions`, so this adapter.
-- the `models` map — must contain a **real ID** from `list-endpoints` (they rotate!).
+- the `models` map — a **menu**: every ID you list becomes a choice in `/models`. Each
+  must be a **real chat model** from `list-endpoints` (they rotate!). *(Embedding models
+  can't be picked here — they're not chat models; you'll call those directly for RAG in Week 4.)*
 
-> **Confirm the model ID first** (same command as Week 2):
+> **JSON has no comments** — the `//` lines above are just for reading. The real
+> `opencode.json` in this folder is comment-free and ships with 8 models already
+> listed; use it as-is, or trim the list to what's currently served.
+
+> **Confirm the served IDs first** (same command as Week 2), then keep only live ones:
 > ```bash
 > curl -s https://inference-api.alcf.anl.gov/resource_server/list-endpoints \
 >   -H "Authorization: Bearer $ALCF_TOKEN"
 > ```
-> If `Meta-Llama-3.1-8B-Instruct` isn't listed, edit the ID in `opencode.json`
-> (and in the top-level `model:` line) to one that is.
+> If an ID in the config isn't listed, edit it (and, if it's the default, the top-level
+> `model:` line). A model you list but ALCF isn't serving simply errors when you pick it.
 
 ## 4. Launch and select the model
 
 ```bash
 opencode
 ```
-Inside opencode: type `/models`, pick **ALCF → Llama 3.1 8B**. Confirm with a
-throwaway prompt: *"What model are you and who serves you?"* You are now running an
-**agent** — it can read/write files and run commands — on an **open model you
-control**.
+Inside opencode: type `/models` — **every model from your config's `models` map is
+listed**. Pick one (start with **ALCF → Llama 3.1 8B**), and re-run `/models` any time
+to **switch mid-session**. Confirm with a throwaway prompt: *"What model are you and
+who serves you?"* You are now running an **agent** — it can read/write files and run
+commands — on an **open model you control**.
+
+**Which to pick?** Small models (8B) are fast and, for this course, usefully
+*fallible* — they'll still fabricate, which is the Week-5 lesson. Bigger models
+(70B, `gpt-oss-120b`) code more reliably but cold-start slower. Try the same prompt on
+two sizes and compare — that contrast is itself a finding for your disclosure appendix.
 
 ---
 

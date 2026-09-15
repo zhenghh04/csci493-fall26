@@ -187,25 +187,25 @@ resource_server/list-endpoints \
 
 % ---------------------------------------------------------------- step 2: the config
 \begin{frame}[fragile]{Step 2 --- Tell opencode about ALCF (\texttt{opencode.json})}
-  \begin{lstlisting}[style=shell, title=opencode.json (in your project folder)]
+  \begin{lstlisting}[style=shell, title={opencode.json --- one provider, a menu of models}]
 {
-  "$schema": "https://opencode.ai/config.json",
-  "model": "alcf/meta-llama/Meta-Llama-3.1-8B-Instruct",
-  "provider": {
-    "alcf": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "ALCF Inference Endpoint",
-      "options": {
-        "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
-        "apiKey": "{env:ALCF_TOKEN}"
-      },
-      "models": { "meta-llama/Meta-Llama-3.1-8B-Instruct": {} }
+  "model": "alcf/meta-llama/Meta-Llama-3.1-8B-Instruct",   // default at startup
+  "provider": { "alcf": {
+    "npm": "@ai-sdk/openai-compatible",
+    "options": {
+      "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
+      "apiKey": "{env:ALCF_TOKEN}"
+    },
+    "models": {                       // every ID here appears in /models
+      "meta-llama/Meta-Llama-3.1-8B-Instruct": {},
+      "meta-llama/Llama-3.3-70B-Instruct":     {},
+      "openai/gpt-oss-120b":                   {}
     }
-  }
+  } }
 }
   \end{lstlisting}
   \begin{center}\scriptsize\color{midgray}%
-    Same \texttt{baseURL} \& token as Week 2 --- wrapped in one \texttt{openai-compatible} provider block.\end{center}
+    Same \texttt{baseURL} \& token as Week 2 $\cdot$ list as many \textbf{served} chat models as you like --- each becomes a choice.\end{center}
 \end{frame}
 
 % ---------------------------------------------------------------- step 3: launch
@@ -217,15 +217,16 @@ resource_server/list-endpoints \
 opencode          # in the project folder
 
 # inside opencode:
-/models           # pick ALCF -> Llama 3.1 8B
+/models    # menu of ALL models you listed
+           # re-run any time to switch
       \end{lstlisting}
       {\scriptsize\color{midgray}Sanity check: \emph{``What model are you, and who serves you?''}}
     \end{column}
     \begin{column}{0.5\textwidth}
-      \begin{featbox}{cRAG}{\faCheckDouble\ You now have\dots}
-        \scriptsize \dots\ a coding \textbf{agent} --- it can read/write files and run
-        commands --- driven by an \textbf{open model you control}, on ALCF. The Week 1
-        loop, on the Week 2 engine.
+      \begin{featbox}{cRAG}{\faRandom\ Pick --- and switch}
+        \scriptsize \texttt{/models} lists every model from your config. Start with
+        \textbf{8B} (fast, and usefully \emph{fallible}); switch to \textbf{70B} or
+        \texttt{gpt-oss-120b} for harder code. Same agent, same loop --- one keystroke.
       \end{featbox}
     \end{column}
   \end{columns}
