@@ -100,6 +100,36 @@ After refreshing a token, restart OpenCode. For the standalone desktop app, use
 [the desktop setup guide](tutorials/opencode_vibe_coding/desktop_setup.md), which
 also covers launching from the Dock/Finder.
 
+
+### Coding with Inkling and Nemotron
+
+The lab configuration includes **Inkling BF16**, **Nemotron 3 Ultra**, and
+**Nemotron 3 Super 120B**. After completing the token setup above, run these
+commands from the repository root:
+
+```bash
+cd tutorials/opencode_vibe_coding
+# First choice to try for coding:
+opencode --model alcf_minerva/inkling-bf16
+# Alternative on Minerva:
+opencode --model alcf_minerva/nemotron-3-ultra
+# Nemotron variant on Sophia:
+opencode --model alcf/nvidia/nemotron-3-super-120b
+```
+
+Run one OpenCode command at a time, or switch models with `/models` inside the
+app. Each provider uses the same `ALCF_TOKEN`.
+
+**Why try Inkling first?** Thinking Machines' published coding evaluations favor
+Inkling over Nemotron 3 Ultra. This is a recommendation based on the
+[Inkling model card](https://huggingface.co/thinkingmachines/Inkling#5-evaluations),
+not a completed comparison on our ALCF deployment. Verify file editing and tool
+use on a small task before using either model for a larger assignment.
+
+For the benchmark comparison, configuration details, and switching instructions,
+see [Advanced models: Inkling and Nemotron](tutorials/opencode_vibe_coding/README.md#advanced-models-inkling-and-nemotron).
+The introductory lab still defaults to Llama 3.1 8B.
+
 ---
 
 ## Assigned readings (not redistributed here)

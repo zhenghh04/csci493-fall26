@@ -187,6 +187,23 @@ live `list-endpoints` catalog on September 15, 2026:
 | Nemotron 3 Ultra | Minerva | `alcf_minerva/nemotron-3-ultra` |
 | Nemotron 3 Super 120B | Sophia | `alcf/nvidia/nemotron-3-super-120b` |
 
+**Coding recommendation:** try **Inkling BF16** first, with **Nemotron 3 Ultra**
+as an alternative. Thinking Machines reports the following results in its
+[Inkling model card](https://huggingface.co/thinkingmachines/Inkling#5-evaluations):
+
+| Coding benchmark | Inkling | Nemotron 3 Ultra |
+| --- | --- | --- |
+| SWE-bench Verified | 77.6% | 70.7% |
+| SWE-bench Pro (Public) | 54.3% | 46.4% |
+| Terminal Bench 2.1 (Best Harness) | 63.8 | 56.4 |
+
+These are developer-reported results, with Inkling evaluated at `effort=0.99`;
+our OpenCode configuration does not reproduce that evaluation setup. They are
+not measurements of ALCF latency or OpenCode tool reliability, and the table does
+not compare Nemotron 3 Super. Before class, verify a small file-editing task and
+its tests with your selected model. Keep Llama 3.1 8B for introductory exercises
+where examining model mistakes is part of the lesson.
+
 Refresh `ALCF_TOKEN`, then select one through `/models`, or launch directly:
 
 ```bash
