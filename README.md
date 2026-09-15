@@ -38,7 +38,12 @@ the theological and ethical questions autonomous AI raises.
   it demands.
   - `README.md` — one-page student handout (token → `opencode.json` → `/models` →
     vibe-code → the integrity tension).
-  - `opencode.json` — ready-to-use ALCF provider config (OpenAI-compatible).
+  - `opencode.json` — ready-to-use ALCF provider config (OpenAI-compatible), with a
+    menu of chat models selectable via `/models`.
+  - `examples.md` — graded hands-on ladder: plot sin(x) → sort + test → count words →
+    the factual trap (green code that's confidently wrong).
+  - `solutions/` — reference implementations (`plot_sin.py`, `sort_and_test.py`) as
+    answer key / projector fallback.
   - `set_alcf_token.sh` — `source` it to export a fresh `ALCF_TOKEN` before launch.
   - `sample.txt` — tiny verse corpus so the vibe-coding demo runs out of the box.
 

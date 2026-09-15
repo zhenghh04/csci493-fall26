@@ -112,29 +112,35 @@ two sizes and compare — that contrast is itself a finding for your disclosure 
 
 ---
 
-## 5. Vibe-code something (20 min)
+## 5. Vibe-code something (25 min)
 
 **"Vibe coding"** (Karpathy, 2025): describe what you want in plain language, let the
 agent write and run the code, and *ride the vibes* — accept results without reading
-every line. It's genuinely fast. Try it:
+every line. It's genuinely fast.
 
-> **Prompt:** *"Create a Python script `verse_count.py` that reads a plain-text file
-> of Bible verses (one per line) and prints the 10 most frequent words, ignoring
-> common stop-words. Then run it on `sample.txt` and show me the output."*
+Work through the graded ladder in **[`examples.md`](examples.md)** — each prompt adds
+one habit:
 
-Let opencode plan, write the file, and run it. Watch the **loop**: it proposes,
-acts, sees the error/output, and fixes itself. That is the Week-1 `plan → act →
-observe` — now doing real work, on your model.
+1. **Plot sin(x)** → *feel the loop* (watch it install matplotlib and re-run itself).
+2. **Sort a list + test it** → *test it, don't just run it* (it writes pytest tests and
+   fixes its own failures).
+3. **Count words in `sample.txt`** → *read what it wrote* (whose stop-word list is it?).
+4. **The trap** → aim the same habit at a **factual** claim and watch green code lie.
 
-**Then, deliberately, distrust the vibes.** Ask it something with a *factual* trap:
+Reference solutions are in **[`solutions/`](solutions/)** (`plot_sin.py`,
+`sort_and_test.py`) — an answer key and projector fallback; the point is to have
+opencode generate them live, then compare.
 
-> **Prompt:** *"Add a function that returns the exact text of Philemon 1:6 as a
-> string, from memory — no file, no internet."*
+**The trap, in full** — after the warm-ups, distrust the vibes:
 
-It will happily hard-code a **plausible but likely wrong** verse — last week's
-hallucination, now baked into *code that runs green*. Green tests ≠ true. **Save
-this** (prompt + the generated verse + the real verse) — it is a disclosure-appendix
-artifact, exactly like your Week 2 hallucination.
+> **Prompt:** *"Add a function `philemon_1_6()` that returns the exact text of Philemon
+> 1:6 from memory — no file, no internet. Add a test that it returns a non-empty string,
+> and run it."*
+
+The test **passes** — but the verse is almost certainly a **plausible fabrication**:
+last week's hallucination, now baked into *code that runs green*. **A passing test
+proves the code runs, not that it's true.** **Save this** (prompt + the generated verse +
+the real verse) — a disclosure-appendix artifact, exactly like your Week 2 hallucination.
 
 ---
 

@@ -264,34 +264,64 @@ opencode          # in the project folder
     Same engine as Week 2 --- \emph{plausible, not true} --- now writing code, not prose.\end{center}
 \end{frame}
 
-% ---------------------------------------------------------------- vibe lab
-\begin{frame}[fragile]{Vibe-lab: build a tool, then \emph{distrust} it}
+% ---------------------------------------------------------------- warm-ups
+\begin{frame}{Warm-ups: three prompts, watch the loop work}
   \begin{columns}[t, totalwidth=\textwidth]
+    \begin{column}{0.31\textwidth}
+      \begin{featbox}{cAgent}{\faChartLine\ 1. Plot sin(x)}
+        \scriptsize \emph{``Plot sin(x) on $[0,2\pi]$ with matplotlib, save
+        \texttt{sin.png}, then run it.''}
+        \\[4pt]{\color{midgray}No matplotlib? It \textbf{installs it and re-runs} --- that's the loop.}
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.035\textwidth}\end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{featbox}{cRAG}{\faVial\ 2. Sort \& test}
+        \scriptsize \emph{``\texttt{sort\_ints(nums)} ascending, plus pytest for empty,
+        duplicates, negatives. Run them.''}
+        \\[4pt]{\color{midgray}Writes code \textbf{and} tests, then \textbf{fixes its own} failures.}
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.035\textwidth}\end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{featbox}{accentblue}{\faAlignLeft\ 3. Count words}
+        \scriptsize \emph{``Top-10 words in \texttt{sample.txt}, minus stop-words.''}
+        \\[4pt]{\color{midgray}Now \textbf{read} which words it treats as stop-words --- a silent decision.}
+      \end{featbox}
+    \end{column}
+  \end{columns}
+  \vspace{10pt}
+  \begin{calloutbox}[accentteal]
+    \small\faCheckCircle\ All three \textbf{run green} --- you described, it built. Next:
+    aim the very same habit at a \textbf{factual} claim, and watch it break.
+  \end{calloutbox}
+\end{frame}
+
+% ---------------------------------------------------------------- the trap
+\begin{frame}[fragile]{Then trip the trap: green code, confidently wrong}
+  \begin{columns}[c, totalwidth=\textwidth]
     \begin{column}{0.5\textwidth}
-      {\footnotesize\bfseries\color{cRAG}\faMagic\ 1. Vibe it}
+      {\footnotesize\bfseries\color{accentgold}\faGhost\ Aim it at a fact}
       \begin{lstlisting}[style=shell]
-Create verse_count.py: read a text
-file of verses (one per line) and print
-the 10 most frequent non-stop words.
-Then run it on sample.txt.
+Add philemon_1_6() returning the exact
+text of Philemon 1:6 from memory --- no
+file, no internet. Add a test that it
+returns a non-empty string, and run it.
       \end{lstlisting}
-      {\scriptsize\color{midgray}Watch it plan $\to$ write $\to$ run $\to$ self-fix. Don't read the code yet.}
     \end{column}
     \begin{column}{0.5\textwidth}
-      {\footnotesize\bfseries\color{accentgold}\faGhost\ 2. Trip the factual trap}
-      \begin{lstlisting}[style=shell]
-Add a function returning the exact text
-of Philemon 1:6 from memory --- no file,
-no internet.
-      \end{lstlisting}
-      {\scriptsize\color{midgray}It hard-codes a plausible, likely-\textbf{wrong} verse.}
+      \begin{featbox}{accentgold}{\faExclamationTriangle\ What happens}
+        \scriptsize The test \textbf{passes} (the string is non-empty) --- but the verse
+        is very likely \textbf{fabricated}, in fluent biblical cadence. Last week's
+        hallucination, now \textbf{baked into code that runs green.}
+      \end{featbox}
     \end{column}
   \end{columns}
   \vspace{6pt}
   \begin{calloutbox}[accentgold]
-    \small\faExclamationTriangle\ \textbf{Green tests are not truth.} Last week's
-    hallucination is now \textbf{baked into code that runs}. \textbf{Save it} --- prompt,
-    the generated verse, the real verse. Another disclosure-appendix artifact.
+    \small\faBalanceScale\ \textbf{A passing test proves the code runs, not that it's
+    true.} \textbf{Save it} --- prompt, the generated verse, the real verse; diff them.
+    Another disclosure-appendix artifact.
   \end{calloutbox}
 \end{frame}
 
