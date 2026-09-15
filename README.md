@@ -39,9 +39,10 @@ the theological and ethical questions autonomous AI raises.
   - `README.md` — one-page student handout (token → `opencode.json` → `/models` →
     vibe-code → the integrity tension).
   - `opencode.json` — ready-to-use ALCF provider config (OpenAI-compatible), with a
-    menu of chat models selectable via `/models`.
+    menu of chat models selectable via `/models`, including Inkling BF16 and
+    Nemotron 3 Ultra (Minerva), plus Nemotron 3 Super 120B (Sophia).
   - [Desktop app setup](tutorials/opencode_vibe_coding/desktop_setup.md) — connect
-    OpenCode to Sophia/Metis, refresh credentials, and troubleshoot authentication.
+    OpenCode to Sophia/Metis/Minerva, refresh credentials, and troubleshoot authentication.
   - `examples.md` — graded hands-on ladder: plot sin(x) → sort + test → count words →
     the factual trap → **capstone**: download Martin Luther's writings and build a
     vector database (RAG with citations).

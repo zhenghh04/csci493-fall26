@@ -1,6 +1,6 @@
 # Connect the OpenCode desktop app to ALCF
 
-This guide configures the standalone desktop app to use **Sophia** or **Metis**.
+This guide configures the standalone desktop app to use **Sophia**, **Metis**, or **Minerva**.
 The commands below use macOS/Linux shell syntax; the macOS launch example assumes
 OpenCode is installed in `/Applications`. Last checked: September 15, 2026.
 
@@ -79,6 +79,9 @@ For a new configuration, use this complete, comment-free JSON:
         },
         "openai/gpt-oss-120b": {
           "name": "gpt-oss 120B (Sophia)"
+        },
+        "nvidia/nemotron-3-super-120b": {
+          "name": "Nemotron 3 Super 120B (Sophia)"
         }
       }
     },
@@ -92,6 +95,22 @@ For a new configuration, use this complete, comment-free JSON:
       "models": {
         "gpt-oss-120b": {
           "name": "gpt-oss 120B (Metis)"
+        }
+      }
+    },
+    "alcf_minerva": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "ALCF Minerva",
+      "options": {
+        "baseURL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+        "apiKey": "{file:~/.config/opencode/alcf-token}"
+      },
+      "models": {
+        "inkling-bf16": {
+          "name": "Inkling BF16 (Minerva)"
+        },
+        "nemotron-3-ultra": {
+          "name": "Nemotron 3 Ultra (Minerva)"
         }
       }
     }
@@ -109,9 +128,27 @@ are merged with project settings, which can override them. See
 [OpenCode configuration](https://opencode.ai/docs/config/).
 
 **For this repository:** the terminal tutorial's `opencode.json` defines a separate
-provider named `alcf` using `{env:ALCF_TOKEN}`. In the desktop app, select **ALCF Metis**
-or **ALCF Sophia** from this guide to use the token file. A project default may
+provider named `alcf` using `{env:ALCF_TOKEN}`. In the desktop app, select **ALCF Metis**, **ALCF Sophia**,
+or **ALCF Minerva** from this guide to use the token file. A project default may
 select the terminal provider until you change the model.
+
+### Select Inkling or Nemotron for advanced exercises
+
+The configuration above also adds **ALCF Minerva → Inkling BF16** and
+**ALCF Minerva → Nemotron 3 Ultra**, using the same private token file. Under
+**ALCF Sophia**, choose **Nemotron 3 Super 120B** for that variant. These IDs were
+confirmed in the live ALCF catalog on September 15, 2026; full agent workflows
+have not been tested for these additions.
+
+To make Inkling the default for new chats, set the top-level `model` to
+`alcf_minerva/inkling-bf16`; for Ultra, use `alcf_minerva/nemotron-3-ultra`.
+Existing chats may retain their prior selection, so check the model picker.
+
+**Metis limitation:** the Metis request below is a basic authentication/chat test.
+ALCF currently documents Metis as not supporting tool calling. For exercises
+that require reading files or running commands, select a tool-capable model on
+Sophia or Minerva and verify it with a small task. See
+[ALCF's cluster capabilities](https://docs.alcf.anl.gov/services/inference-endpoints/).
 
 ## 4. Verify the service, then open the app
 
@@ -158,7 +195,7 @@ provider name does not repair the provider your chat is actually using.
 ### Alternative: launch macOS OpenCode with the shell token
 
 If you prefer `{env:ALCF_TOKEN}` over the token file, use that value for `apiKey`
-in both providers. Fully quit the app, export a fresh token, and launch its
+in all three providers. Fully quit the app, export a fresh token, and launch its
 executable directly from the same shell:
 
 ```bash

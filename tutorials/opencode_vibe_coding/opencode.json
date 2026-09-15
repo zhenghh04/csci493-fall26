@@ -41,6 +41,25 @@
         "openai/gpt-oss-120b": {
           "name": "gpt-oss 120B (open weights)",
           "limit": { "context": 131072, "output": 8192 }
+        },
+        "nvidia/nemotron-3-super-120b": {
+          "name": "Nemotron 3 Super 120B (Sophia)"
+        }
+      }
+    },
+    "alcf_minerva": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "ALCF Minerva",
+      "options": {
+        "baseURL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+        "apiKey": "{env:ALCF_TOKEN}"
+      },
+      "models": {
+        "inkling-bf16": {
+          "name": "Inkling BF16 (Minerva)"
+        },
+        "nemotron-3-ultra": {
+          "name": "Nemotron 3 Ultra (Minerva)"
         }
       }
     }

@@ -118,7 +118,7 @@ it from the directory you launch in; a global copy lives at
         "meta-llama/Meta-Llama-3.1-70B-Instruct": { "name": "Llama 3.1 70B" },
         "meta-llama/Llama-3.3-70B-Instruct":      { "name": "Llama 3.3 70B (good at code)" },
         "openai/gpt-oss-120b":                    { "name": "gpt-oss 120B" }
-        // ...the shipped opencode.json lists 8 models; add or remove freely
+        // ...the shipped config also includes Nemotron and a separate Minerva provider
       }
     }
   }
@@ -175,6 +175,39 @@ commands — on an **open model you control**.
 *fallible* — they'll still fabricate, which is the Week-5 lesson. Bigger models
 (70B, `gpt-oss-120b`) code more reliably but cold-start slower. Try the same prompt on
 two sizes and compare — that contrast is itself a finding for your disclosure appendix.
+
+### Advanced models: Inkling and Nemotron
+
+The shipped configuration includes these additional choices, confirmed in ALCF's
+live `list-endpoints` catalog on September 15, 2026:
+
+| Model | Cluster | OpenCode selection / `--model` value |
+| --- | --- | --- |
+| Inkling BF16 | Minerva | `alcf_minerva/inkling-bf16` |
+| Nemotron 3 Ultra | Minerva | `alcf_minerva/nemotron-3-ultra` |
+| Nemotron 3 Super 120B | Sophia | `alcf/nvidia/nemotron-3-super-120b` |
+
+Refresh `ALCF_TOKEN`, then select one through `/models`, or launch directly:
+
+```bash
+opencode --model alcf_minerva/inkling-bf16
+# Or:
+opencode --model alcf_minerva/nemotron-3-ultra
+# Or:
+opencode --model alcf/nvidia/nemotron-3-super-120b
+```
+
+Minerva uses `/resource_server/minerva/api/v1`; Sophia uses
+`/resource_server/sophia/vllm/v1`. Both providers in the supplied configuration
+read the same `ALCF_TOKEN`. If you copied an older config, merge the new
+`alcf_minerva` provider and Sophia's Nemotron entry into your copy, then restart
+OpenCode. The lab's default remains Llama 3.1 8B for the introductory exercises.
+
+Catalog availability does not guarantee that a model is already running or that
+every agent tool interaction works. Try a small task first. No context-window or
+output-limit overrides are supplied for these new models because their deployed
+limits were not verified. See the
+[ALCF model catalog and serving details](https://docs.alcf.anl.gov/services/inference-endpoints/).
 
 ## 4b. Prefer a UI? Same setup, three front-ends
 
