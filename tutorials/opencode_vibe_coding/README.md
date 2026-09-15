@@ -113,23 +113,25 @@ two sizes and compare — that contrast is itself a finding for your disclosure 
 
 ## 4b. Prefer a UI? Same setup, three front-ends
 
-You installed opencode **once** (step 0), and every front-end reads the **same
-`opencode.json`** — so your ALCF provider, the `/models` menu, and `ALCF_TOKEN` all work
-identically. Pick whichever you like:
+The terminal and browser use the CLI installed in step 0. These interfaces share
+the provider configuration, but each process needs access to the token when it
+starts. Pick whichever you like:
 
 | Front-end | How to launch | Good if… |
 |---|---|---|
 | **Terminal (TUI)** | `opencode` | you're comfortable in a terminal (default; nothing extra). |
 | **Browser UI** ⭐ | `opencode web` | you'd rather click than type. Starts a local server and **opens opencode in your browser**; add `--port 4096` to fix the port. |
+| **Desktop app** | Install separately; follow [Desktop app → ALCF setup](desktop_setup.md). | you want a standalone app with credentials that work when launched from the Dock/Finder. |
 | **VS Code / Cursor** | install **"opencode"** from the Extensions Marketplace (or run `opencode` once in the IDE terminal — it auto-installs), then **Ctrl+Esc** (Cmd+Esc on Mac) | you already edit code in an IDE; it shares your open file/selection, and `Ctrl+Alt+K` inserts a file reference. |
 
 The **Browser UI** (`opencode web`) is the simplest "app with a UI" — nothing to install
-beyond step 0, and it stays private on your machine (`127.0.0.1`; no code leaves). There
-is also a standalone **desktop app** — see <https://opencode.ai/docs/> — but the browser
-UI needs nothing extra.
+beyond step 0. Its server runs locally (`127.0.0.1`), but prompts and code included
+in model requests are sent to ALCF.
 
-> **Same rules apply in every UI:** refresh `ALCF_TOKEN` in your shell *before* launching
-> (opencode reads it at startup), and pick your model from the same `/models` menu.
+> For interfaces launched from your shell, refresh `ALCF_TOKEN` before launching
+> and restart after a refresh. Desktop apps launched from the Dock/Finder do not
+> inherit that shell variable; the [desktop guide](desktop_setup.md) uses a private
+> token file and explains how to refresh it.
 
 ---
 
