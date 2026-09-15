@@ -19,6 +19,7 @@ the theological and ethical questions autonomous AI raises.
 | `syllabus.md` | Short syllabus overview |
 | `Lecture01_notes.md` | Week 1 — course framing, agentic AI, toolkit setup |
 | `Lecture02_notes.md` | Week 2 — from LLMs to agents (instructor notes) |
+| `Lecture_opencode_vibe_notes.md` | Coding agents on an open model & vibe coding (instructor notes; slides `lecture03`) |
 | `slides/` | Beamer decks (`lectureNN.tex` + compiled `lectureNN.pdf`), shared `preamble.tex` / `titlepage.tex`, logos, images |
 | `tutorials/` | Hands-on student materials (see below) |
 | `readings/` | Assigned papers — **not tracked** (copyright); cited below |
@@ -32,6 +33,14 @@ the theological and ethical questions autonomous AI raises.
   - `02_simple_rag.py` — retrieve → ground → generate over a tiny corpus.
   - `alcf_inference_demo.ipynb` — guided notebook: hello → temperature sweep →
     hallucination demo → grounding by hand → **simple RAG**.
+- **`tutorials/opencode_vibe_coding/`** — Wiring an open **ALCF model into a coding
+  agent** ([opencode](https://opencode.ai)), then **vibe coding** — and the discipline
+  it demands.
+  - `README.md` — one-page student handout (token → `opencode.json` → `/models` →
+    vibe-code → the integrity tension).
+  - `opencode.json` — ready-to-use ALCF provider config (OpenAI-compatible).
+  - `set_alcf_token.sh` — `source` it to export a fresh `ALCF_TOKEN` before launch.
+  - `sample.txt` — tiny verse corpus so the vibe-coding demo runs out of the box.
 
 ---
 

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "alcf/meta-llama/Meta-Llama-3.1-8B-Instruct",
+  "provider": {
+    "alcf": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "ALCF Inference Endpoint",
+      "options": {
+        "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
+        "apiKey": "{env:ALCF_TOKEN}"
+      },
+      "models": {
+        "meta-llama/Meta-Llama-3.1-8B-Instruct": {
+          "name": "Llama 3.1 8B Instruct (ALCF)",
+          "limit": { "context": 131072, "output": 8192 }
+        },
+        "meta-llama/Meta-Llama-3.1-70B-Instruct": {
+          "name": "Llama 3.1 70B Instruct (ALCF)",
+          "limit": { "context": 131072, "output": 8192 }
+        }
+      }
+    }
+  }
+}
