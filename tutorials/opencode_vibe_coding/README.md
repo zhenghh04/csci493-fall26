@@ -26,7 +26,8 @@ You need three things you already have: **(1)** your ALCF token from Week 2,
   # or:
   curl -fsSL https://opencode.ai/install | bash
   ```
-  Check it: `opencode --version`.
+  Check it: `opencode --version`. *(This one install powers all three front-ends below
+  — terminal, browser, and VS Code — so you only install once.)*
 
 ## 1. The one idea: the ALCF endpoint is "just an OpenAI-compatible URL"
 
@@ -109,6 +110,26 @@ commands — on an **open model you control**.
 *fallible* — they'll still fabricate, which is the Week-5 lesson. Bigger models
 (70B, `gpt-oss-120b`) code more reliably but cold-start slower. Try the same prompt on
 two sizes and compare — that contrast is itself a finding for your disclosure appendix.
+
+## 4b. Prefer a UI? Same setup, three front-ends
+
+You installed opencode **once** (step 0), and every front-end reads the **same
+`opencode.json`** — so your ALCF provider, the `/models` menu, and `ALCF_TOKEN` all work
+identically. Pick whichever you like:
+
+| Front-end | How to launch | Good if… |
+|---|---|---|
+| **Terminal (TUI)** | `opencode` | you're comfortable in a terminal (default; nothing extra). |
+| **Browser UI** ⭐ | `opencode web` | you'd rather click than type. Starts a local server and **opens opencode in your browser**; add `--port 4096` to fix the port. |
+| **VS Code / Cursor** | install **"opencode"** from the Extensions Marketplace (or run `opencode` once in the IDE terminal — it auto-installs), then **Ctrl+Esc** (Cmd+Esc on Mac) | you already edit code in an IDE; it shares your open file/selection, and `Ctrl+Alt+K` inserts a file reference. |
+
+The **Browser UI** (`opencode web`) is the simplest "app with a UI" — nothing to install
+beyond step 0, and it stays private on your machine (`127.0.0.1`; no code leaves). There
+is also a standalone **desktop app** — see <https://opencode.ai/docs/> — but the browser
+UI needs nothing extra.
+
+> **Same rules apply in every UI:** refresh `ALCF_TOKEN` in your shell *before* launching
+> (opencode reads it at startup), and pick your model from the same `/models` menu.
 
 ---
 

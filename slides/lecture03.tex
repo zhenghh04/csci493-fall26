@@ -235,6 +235,41 @@ opencode          # in the project folder
     From here on, you \emph{describe}; the agent plans, writes, runs, and self-corrects.\end{center}
 \end{frame}
 
+% ---------------------------------------------------------------- UI options
+\begin{frame}{Prefer a UI? Same config --- three front-ends}
+  \begin{columns}[t, totalwidth=\textwidth]
+    \begin{column}{0.31\textwidth}
+      \begin{featbox}{accentblue}{\faTerminal\ Terminal (TUI)}
+        \scriptsize Just \texttt{opencode}. The default --- nothing extra to install.
+        \\[3pt]{\color{midgray}For the terminal-comfortable.}
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.035\textwidth}\end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{featbox}{cRAG}{\faWindowMaximize\ Browser UI}
+        \scriptsize \texttt{opencode web} --- starts a local server and \textbf{opens
+        opencode in your browser} (\texttt{-{}-port 4096} to fix it).
+        \\[3pt]{\color{midgray}Click, don't type. Stays on \texttt{127.0.0.1}.}
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.035\textwidth}\end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{featbox}{cEval}{\faCode\ VS Code / Cursor}
+        \scriptsize Install \textbf{``opencode''} from the Marketplace; open with
+        \textbf{Ctrl+Esc}. Shares your open file.
+        \\[3pt]{\color{midgray}If you already live in an IDE.}
+      \end{featbox}
+    \end{column}
+  \end{columns}
+  \vspace{10pt}
+  \begin{calloutbox}[cAgent]
+    \small\faInfoCircle\ \textbf{One install, one config.} Every front-end reads the same
+    \texttt{opencode.json} --- your ALCF provider, the \texttt{/models} menu, and
+    \texttt{ALCF\_TOKEN} work identically. (A standalone \textbf{desktop app} exists too;
+    the browser UI is the simplest ``app.'')
+  \end{calloutbox}
+\end{frame}
+
 % ================================================================ PART 2 — vibe coding
 \begin{frame}{Part 2 --- ``Vibe coding'': describe it, let the agent build it}
   \vspace{2pt}
