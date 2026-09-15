@@ -19,15 +19,41 @@ You need three things you already have: **(1)** your ALCF token from Week 2,
 
 - Your **Week 2 ALCF setup**: `inference_auth_token.py` in your working folder and a
   successful `python inference_auth_token.py authenticate` (token good ~48 h).
-- **Node.js 18+** (`node --version`). If missing: <https://nodejs.org>.
-- **Install opencode** (pick one):
-  ```bash
-  npm install -g opencode-ai          # via npm
-  # or:
-  curl -fsSL https://opencode.ai/install | bash
-  ```
-  Check it: `opencode --version`. *(This one install powers all three front-ends below
-  — terminal, browser, and VS Code — so you only install once.)*
+- A terminal running **Bash or Zsh** on macOS/Linux; Windows students can use
+  [WSL](https://opencode.ai/docs/windows/).
+
+### Install the tested official CLI build
+
+For this lab, use the **official OpenCode 1.18.31 binary**. It completed an ALCF
+request in our September 15, 2026 check. The Homebrew 1.18.30 build failed before
+contacting ALCF with `Unexpected server error` / `SystemPrompt.environment`.
+See the [upstream bug report](https://github.com/anomalyco/opencode/issues/48372).
+
+Run the official installer with the tested version pinned:
+
+```bash
+curl -fsSL https://opencode.ai/install | bash -s -- --version 1.18.31
+export PATH="$HOME/.opencode/bin:$PATH"
+hash -r
+command -v opencode
+opencode --version
+```
+
+Expected: `command -v` points to **your home directory's `.opencode/bin/opencode`**,
+and the version is **`1.18.31`**. The installer can update your shell startup file;
+open a new terminal and repeat those two checks. If another installation still
+wins, add `export PATH="$HOME/.opencode/bin:$PATH"` at the **end** of `~/.zshrc`
+(Zsh) or `~/.bashrc` (Bash), then open a new terminal. For a Bash login shell,
+ensure `~/.bash_profile` sources `~/.bashrc`.
+
+If needed, `type -a opencode` shows competing installations or aliases. You can
+keep Homebrew installed, but use `~/.opencode/bin/opencode` directly until the
+shell resolves the correct executable. Custom proxy/IDE launchers with an absolute
+Homebrew path must also be updated to the official binary's path.
+
+This installation does not require Node.js. It supplies the CLI used by the
+terminal and browser interfaces; the [desktop app](desktop_setup.md) is installed
+separately. See the [official installation documentation](https://opencode.ai/docs/).
 
 ## 1. The one idea: the ALCF endpoint is "just an OpenAI-compatible URL"
 
@@ -42,8 +68,32 @@ in your shell *before* launching:
 
 ```bash
 export ALCF_TOKEN="$(python inference_auth_token.py get_access_token)"
-# convenience: `source set_alcf_token.sh` does exactly this and checks it worked
+# Run this from the directory containing inference_auth_token.py.
+# Or use: source set_alcf_token.sh
 ```
+
+Use **`ALCF_TOKEN`**, exactly as spelled in the provided `opencode.json`. Exporting
+only `ALCF_INFERENCE_TOKEN` does not populate this variable. To reuse an existing,
+still-valid token once:
+
+```bash
+export ALCF_TOKEN="$ALCF_INFERENCE_TOKEN"
+```
+
+Prefer the authentication helper for subsequent sessions so expired tokens can
+be refreshed. If it asks you to log in again, run
+`python inference_auth_token.py authenticate --force`, then export the token again.
+Do not save a literal token in your shell startup file or commit it to Git.
+
+Check that the variable is populated **without printing the credential**:
+
+```bash
+test -n "$ALCF_TOKEN" && echo "ALCF_TOKEN is set" || echo "ALCF_TOKEN is missing"
+```
+
+Use `source set_alcf_token.sh`, not `bash set_alcf_token.sh`: sourcing exports the
+variable into your current shell. Launch OpenCode from that same shell, and quit
+and relaunch it after refreshing the token.
 
 ## 3. Tell opencode about the ALCF provider
 
@@ -95,15 +145,30 @@ Read the four fields out loud so they stop being magic:
 > If an ID in the config isn't listed, edit it (and, if it's the default, the top-level
 > `model:` line). A model you list but ALCF isn't serving simply errors when you pick it.
 
-## 4. Launch and select the model
+## 4. Verify, then launch
+
+From the project folder containing the provided `opencode.json`, and in the shell
+where you exported `ALCF_TOKEN`, run:
+
+```bash
+opencode run --model alcf/meta-llama/Meta-Llama-3.1-8B-Instruct \
+  "Reply only OK. Do not use any tools."
+```
+
+A model response confirms that the CLI can reach ALCF. Small models may not follow
+the exact wording; an authentication or startup error means setup is incomplete.
+This uses the `alcf` provider shipped with the lab, so it does not require the
+separate desktop guide's `alcf_metis` configuration.
+
+Then start the interactive interface:
 
 ```bash
 opencode
 ```
 Inside opencode: type `/models` — **every model from your config's `models` map is
 listed**. Pick one (start with **ALCF → Llama 3.1 8B**), and re-run `/models` any time
-to **switch mid-session**. Confirm with a throwaway prompt: *"What model are you and
-who serves you?"* You are now running an **agent** — it can read/write files and run
+to **switch mid-session**. Confirm the selected provider/model in the UI and send a short test prompt.
+A model's self-description is not a reliable configuration check. You are now running an **agent** — it can read/write files and run
 commands — on an **open model you control**.
 
 **Which to pick?** Small models (8B) are fast and, for this course, usefully
@@ -188,6 +253,8 @@ the tool, and what you accepted unread. The agent is a collaborator, not an auth
 
 | Symptom | Fix |
 |---|---|
+| `Unexpected server error` / `SystemPrompt.environment` | Use the official binary from step 0; check `command -v opencode` and `opencode --version`. This crash can occur before any token is sent. |
+| Old version still runs after installation | Check `type -a opencode`, remove any conflicting alias, put the official binary first on `PATH`, and run `hash -r` or open a new terminal. |
 | `401` / auth error in opencode | Token expired. Re-run `export ALCF_TOKEN=$(python inference_auth_token.py get_access_token)` **and restart** opencode (it reads the token at startup). |
 | Model not in `/models` list | `opencode.json` isn't in the folder you launched from, or JSON is malformed. Validate and relaunch. |
 | "model not found" on first prompt | The ID in `opencode.json` isn't currently served — re-check `list-endpoints`, edit the ID. |

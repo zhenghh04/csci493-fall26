@@ -82,6 +82,25 @@ served model with `list-endpoints` before class.
 
 ---
 
+## OpenCode terminal setup for students
+
+Follow the [coding-agent lab README](tutorials/opencode_vibe_coding/README.md)
+for the complete setup. The tested setup uses:
+
+1. The **official OpenCode 1.18.31 binary**, installed with the pinned command in
+   the lab README. Check the executable path as well as its version; the Homebrew
+   1.18.30 build encountered a startup crash in our September 15, 2026 check.
+2. A fresh **`ALCF_TOKEN`**, exported using `inference_auth_token.py` in the same
+   terminal that launches OpenCode.
+3. The lab's **`opencode.json`** in the project folder, followed by the short
+   `opencode run` verification in step 4.
+
+After refreshing a token, restart OpenCode. For the standalone desktop app, use
+[the desktop setup guide](tutorials/opencode_vibe_coding/desktop_setup.md), which
+also covers launching from the Dock/Finder.
+
+---
+
 ## Assigned readings (not redistributed here)
 
 The reading PDFs are copyrighted and intentionally excluded from this repository.
