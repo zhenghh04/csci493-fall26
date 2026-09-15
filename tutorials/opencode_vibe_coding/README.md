@@ -126,6 +126,8 @@ one habit:
    fixes its own failures).
 3. **Count words in `sample.txt`** → *read what it wrote* (whose stop-word list is it?).
 4. **The trap** → aim the same habit at a **factual** claim and watch green code lie.
+5. **Capstone** → download **Martin Luther's writings** and build a **vector database**
+   (RAG) that answers only from Luther's actual words, with citations.
 
 Reference solutions are in **[`solutions/`](solutions/)** (`plot_sin.py`,
 `sort_and_test.py`) — an answer key and projector fallback; the point is to have

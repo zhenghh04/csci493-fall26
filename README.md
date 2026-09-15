@@ -41,7 +41,8 @@ the theological and ethical questions autonomous AI raises.
   - `opencode.json` — ready-to-use ALCF provider config (OpenAI-compatible), with a
     menu of chat models selectable via `/models`.
   - `examples.md` — graded hands-on ladder: plot sin(x) → sort + test → count words →
-    the factual trap (green code that's confidently wrong).
+    the factual trap → **capstone**: download Martin Luther's writings and build a
+    vector database (RAG with citations).
   - `solutions/` — reference implementations (`plot_sin.py`, `sort_and_test.py`) as
     answer key / projector fallback.
   - `set_alcf_token.sh` — `source` it to export a fresh `ALCF_TOKEN` before launch.

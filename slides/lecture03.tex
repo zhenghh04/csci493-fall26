@@ -360,6 +360,46 @@ returns a non-empty string, and run it.
   \end{calloutbox}
 \end{frame}
 
+% ---------------------------------------------------------------- capstone
+\begin{frame}{Capstone: a Luther vector database --- RAG on a real corpus}
+  \begin{center}
+  \begin{tikzpicture}[font=\scriptsize, node distance=0.5cm,
+      s/.style={rectangle, rounded corners=3pt, draw, thick, fill=lightgray,
+                drop shadow, align=center, text width=1.5cm, minimum height=0.95cm}]
+    \node[s, draw=labnavy]  (d) {\faDownload\\ \textbf{Download}\\ \scriptsize Gutenberg};
+    \node[s, draw=cAgent, right=of d] (c) {\faCut\\ \textbf{Chunk}\\ \scriptsize passages};
+    \node[s, draw=accentblue, right=of c] (e) {\faVectorSquare\\ \textbf{Embed}\\ \scriptsize vectors};
+    \node[s, draw=cRAG, right=of e] (v) {\faDatabase\\ \textbf{Vector DB}\\ \scriptsize (Chroma)};
+    \node[s, draw=cEval, right=of v] (g) {\faComments\\ \textbf{Retrieve}\\ \scriptsize + ground};
+    \draw[-{Latex[length=5pt]}, thick, midgray] (d)--(c);
+    \draw[-{Latex[length=5pt]}, thick, midgray] (c)--(e);
+    \draw[-{Latex[length=5pt]}, thick, midgray] (e)--(v);
+    \draw[-{Latex[length=5pt]}, thick, midgray] (v)--(g);
+  \end{tikzpicture}
+  \end{center}
+  \vspace{2pt}
+  \begin{columns}[t, totalwidth=\textwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{cRAG}{\faBookOpen\ The corpus --- public-domain Luther}
+        \scriptsize The \textbf{95 Theses}, \emph{Christian Liberty}, the \emph{Large
+        Catechism}, \emph{Table Talk}, \emph{Galatians}\dots\ $\sim$8 works, straight
+        from Project Gutenberg.
+      \end{featbox}
+    \end{column}
+    \begin{column}{0.04\textwidth}\end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{featbox}{accentgold}{\faBalanceScale\ The integrity test}
+        \scriptsize Ask something \textbf{not} in the corpus --- it must \textbf{refuse},
+        not invent. Ask for a thesis --- the citation must be \textbf{verbatim}.
+      \end{featbox}
+    \end{column}
+  \end{columns}
+  \vspace{6pt}
+  \begin{center}\small\color{labnavy}%
+    RAG turns the model from a \textbf{source} (that fabricates) into a \textbf{finder}
+    (that quotes \& cites) --- you build it by \emph{describing} it (\texttt{examples.md}).\end{center}
+\end{frame}
+
 % ---------------------------------------------------------------- assignment
 \begin{frame}{Assignment for next week}
   \begin{featbox}{accentblue}{\faLaptopCode\ 1. Connect $\to$ vibe $\to$ catch}
