@@ -1,0 +1,15 @@
+# The chatbot UI adds ONE dependency on top of the RAG system you already built.
+# (openai + numpy come from ../requirements.txt; sentence-transformers only if
+#  you turn on semantic retrieval — see requirements-local.txt.)
+#
+# There are two interchangeable front ends over the SAME RAG code. You only need
+# the one you plan to run; installing both is fine and lets you compare them.
+#
+#   chat_bible.py         -> streamlit   (sidebar + expanders; the default)
+#   chat_bible_gradio.py  -> gradio      (fewer lines; `--share` for demo day)
+
+streamlit>=1.36
+
+# Optional second front end. Verified against gradio 6.28; the code avoids the
+# `type=` argument so it also works on gradio 5.x.
+gradio>=5
